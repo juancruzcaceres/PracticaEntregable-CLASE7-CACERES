@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EventArguments;
 using Extensiones;
+using Logica;
 
 namespace Interfaz
 {
@@ -13,6 +14,9 @@ namespace Interfaz
         static void Main(string[] args)
         {
             Extensiones.Extensiones extensiones = new Extensiones.Extensiones();
+            Principal principal = Principal.Instance;
+            principal.eventoAgregarEliminarProducto += handlerProductoAgregadoModificado;
+
             iniMenu:
             Console.WriteLine("1. Ingresar producto\n");
             switch (Convert.ToInt32(Console.ReadLine()))
@@ -34,9 +38,10 @@ namespace Interfaz
                             iniAñoFabricacion:
                             Console.WriteLine("Ingrese año de fabricacion: ");
                             string añoFabricacion = Console.ReadLine();
+                            int añoDeFabricacion;
                             if (Int32.TryParse(añoFabricacion, out Int32 numeroAñoFabricacion))
                             {
-                                Console.WriteLine($"Output: {numeroAñoFabricacion}");
+                                añoDeFabricacion = numeroAñoFabricacion;
                             }
                             else
                             {
@@ -46,15 +51,17 @@ namespace Interfaz
                             iniPulgadas:
                             Console.WriteLine("Ingrese pulgadas: ");
                             string pulgadas = Console.ReadLine();
+                            int numeroPulgadas;
                             if (Int32.TryParse(pulgadas, out Int32 numeroDePulgadas))
                             {
-                                Console.WriteLine($"Output: {numeroDePulgadas}");
+                                numeroPulgadas = numeroDePulgadas;
                             }
                             else
                             {
                                 Console.WriteLine("Error, ingrese un numero valido.");
                                 goto iniPulgadas;
                             }
+                            principal.AgregarProducto(modelo, marca, nroDeSerie, añoDeFabricacion, numeroPulgadas);
                             break;
                         case 2:
                             Console.WriteLine("Ingrese una descripcion del procesador: ");
@@ -66,11 +73,15 @@ namespace Interfaz
                                 "2. 8GB\n" +
                                 "3. 16GB");
                             string cantidadRam = Console.ReadLine();
+                            int cantidadDeRAM;
                             if (Int32.TryParse(cantidadRam, out Int32 numeroCantidadDeRam))
                             {
                                 if (extensiones.NumeroEnRangoDeEnumRAM(numeroCantidadDeRam))
+                                    cantidadDeRAM = numeroCantidadDeRam;
+                                else
                                 {
-                                    //
+                                    Console.WriteLine("Error, ingrese una cantidad de RAM válida.");
+                                    goto iniRam;
                                 }
                             }
                             else
@@ -78,19 +89,40 @@ namespace Interfaz
                                 Console.WriteLine("Error, ingrese un numero valido.");
                                 goto iniRam;
                             }
+                            Console.WriteLine("Ingrese fabricante: ");
+                            string fabricante = Console.ReadLine();
+                            principal.AgregarProducto(modelo, marca, nroDeSerie, descripcionDelProcesador, cantidadDeRAM, fabricante);
                             break;
                         default:
                             Console.WriteLine("Ingrese una opción valida.");
                             goto iniTipoElemento;
-                            break;
                     }
                     break;
                 default:
                     Console.WriteLine("Ingrese una opción valida.");
                     goto iniMenu;
-                    break;
             }
             Console.ReadKey();
+            Console.Clear();
+            goto iniMenu;
+        }
+
+        static void handlerProductoAgregadoModificado(object sender, AgregarEliminarProductoEventArgs args)
+        {
+            Principal principal = Principal.Instance;
+
+            //Imprime en pantalla la descripcion de cada producto de ambos tipos
+            foreach (List<string> listaDescripciones in principal.ObtenerDescripcionesDeProductos())
+            {
+                foreach (string descripcion in listaDescripciones)
+                {
+                    Console.WriteLine(descripcion);
+                }
+            }
+
+            //Imprime en pantalla el producto modificado y total de productos
+            Console.WriteLine($"Producto modificado '{args.TipoDeProducto}', ID '{args.ID}' - Total de Pantallas: {principal.CantidadPantallas}, Total de Computadoras: {principal.CantidadComputadoras} - Pantallas: {(principal.CantidadPantallas*100)/(principal.CantidadPantallas+principal.CantidadComputadoras)}% , Computadoras: {(principal.CantidadComputadoras*100)/(principal.CantidadPantallas + principal.CantidadComputadoras)}%");
+
         }
     }
 }
