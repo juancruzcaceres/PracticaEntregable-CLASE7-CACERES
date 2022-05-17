@@ -54,6 +54,10 @@
       <Project>{c7348f92-ed9f-4696-8ab8-655093317807}</Project>
       <Name>EventArguments</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Extensiones\Extensiones.csproj">
+      <Project>{2da337d7-e516-42e4-ac92-d825294d13f5}</Project>
+      <Name>Extensiones</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
