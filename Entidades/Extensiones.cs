@@ -12,6 +12,5 @@ namespace Entidades
         {
             return valor >= 0 && valor<=3;
         }
-
     }
 }

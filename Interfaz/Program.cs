@@ -112,15 +112,24 @@ namespace Interfaz
             Principal principal = Principal.Instance;
 
             //Imprime en pantalla la descripcion de cada producto de ambos tipos
-            foreach (List<string> listaDescripciones in principal.ObtenerDescripcionesDeProductos())
+            Console.WriteLine();
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Lista de productos: ");
+            List<string> descripciones = principal.ObtenerDescripcionesDeProductos();
+            foreach (string descripcion in descripciones)
             {
-                foreach (string descripcion in listaDescripciones)
+                if (descripcion == descripciones.Last())
                 {
-                    Console.WriteLine(descripcion);
+                    Console.BackgroundColor = ConsoleColor.Red;
                 }
+                else
+                    Console.BackgroundColor = ConsoleColor.Black;
+                Console.WriteLine(descripcion);
             }
 
             //Imprime en pantalla el producto modificado y total de productos
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine();
             Console.WriteLine($"Producto modificado '{args.TipoDeProducto}', ID '{args.ID}' - Total de Pantallas: {principal.CantidadPantallas}, Total de Computadoras: {principal.CantidadComputadoras} - Pantallas: {(principal.CantidadPantallas*100)/(principal.CantidadPantallas+principal.CantidadComputadoras)}% , Computadoras: {(principal.CantidadComputadoras*100)/(principal.CantidadPantallas + principal.CantidadComputadoras)}%");
 
         }

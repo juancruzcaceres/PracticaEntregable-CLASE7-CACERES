@@ -53,6 +53,10 @@
       <Project>{c7348f92-ed9f-4696-8ab8-655093317807}</Project>
       <Name>EventArguments</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Persistencia\Persistencia.csproj">
+      <Project>{016e0137-c9db-45ef-bd9c-5cae8df94ac7}</Project>
+      <Name>Persistencia</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
