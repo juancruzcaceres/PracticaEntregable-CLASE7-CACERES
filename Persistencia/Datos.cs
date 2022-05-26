@@ -10,7 +10,7 @@ using EventArguments;
 
 namespace Persistencia
 {
-    public class Datos
+    public class Datos //PODRIA SER UN SINGLETON TAMBIEN
     {
         public string PathProductos { get; set; }
         public string PathPantallas { get; set; }
@@ -18,6 +18,7 @@ namespace Persistencia
 
         public Datos()
         {
+            //SE PUEDE USAR APPDOMAIN.CURRENTDOMAIN.BASEDIRECTORY
             PathProductos = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             PathProductos += @"\Productos.txt";
             PathPantallas = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);

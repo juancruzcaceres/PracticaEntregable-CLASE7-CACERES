@@ -14,7 +14,7 @@ namespace Interfaz
         static void Main(string[] args)
         {
             Extensiones.Extensiones extensiones = new Extensiones.Extensiones();
-            Principal principal = Principal.Instance;
+            Principal principal = Principal.Instance; //ESTO NO ES NECESARIO. USAR SIEMPRE PRINCIPAL.INSTANCE EN TODOS LADOS
             principal.eventoAgregarEliminarProducto += handlerProductoAgregadoModificado;
 
             iniMenu:

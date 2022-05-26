@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Extensiones
 {
-    public class Extensiones
+    public class Extensiones //CLASE SIMILAR A LA DE ENTIDADES
     {
         public bool NumeroEnRangoDeEnumRAM(int valor)
         {

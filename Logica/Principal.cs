@@ -15,13 +15,14 @@ namespace Logica
         public static Principal Instance { get { return _instance; } }
 
         public EventHandler<AgregarEliminarProductoEventArgs> eventoAgregarEliminarProducto;
-        public List<Elemento> Productos { get; set; }
 
+        //CUAL ES LA IDEA DE LAS 3 LISTAS?? CON UNA SOLA ES SUFICIENTE.
+        public List<Elemento> Productos { get; set; }
         public List<Pantalla> Pantallas { get; set; }
         public List<Computadora> Computadoras { get; set; }
 
-        public int CantidadPantallas { get; set; }
-        public int CantidadComputadoras { get; set; }
+        public int CantidadPantallas { get; set; } //PORQUE NO USAR LISTA.COUNT PARA SABER LA CANTIDAD?
+        public int CantidadComputadoras { get; set; } //PORQUE NO USAR LISTA.COUNT PARA SABER LA CANTIDAD?
 
 
         public Datos BaseDeDatos { get; set; }
@@ -84,17 +85,19 @@ namespace Logica
                 
                 if (producto is Pantalla)
                 {
-                    CantidadPantallas--;
+                    CantidadPantallas--; //SI TE OLVIDAS O ELIMINAS ESTA LINEA EL CONTEO DA MAL SIEMPRE. EVITAR ESTAS VARIABLES
                     Pantallas.Remove(producto as Pantalla);
                     BaseDeDatos.GuardarPantallas(Pantallas);
                 }
                 else
                 {
-                    CantidadComputadoras--;
+                    CantidadComputadoras--; //SI TE OLVIDAS O ELIMINAS ESTA LINEA EL CONTEO DA MAL SIEMPRE. EVITAR ESTAS VARIABLES
                     Computadoras.Remove(producto as Computadora);
                     BaseDeDatos.GuardarComputadoras(Computadoras);
                 }
                 Productos.Remove(producto);
+
+                //PREGUNTAR SI ES != NULL
                 this.eventoAgregarEliminarProducto(this, new AgregarEliminarProductoEventArgs() { TipoDeProducto = producto is Pantalla? "Pantalla" : "Computadora", ID = producto.ID });
             }
         }
